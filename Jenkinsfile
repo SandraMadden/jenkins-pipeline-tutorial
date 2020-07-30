@@ -8,16 +8,16 @@ pipeline {
     environment {
         region = "us-west-1"
         docker_repo_uri = "160524802911.dkr.ecr.us-west-1.amazonaws.com/sample-app"
-        task_def_arn = ""
-        cluster = ""
-        exec_role_arn = ""
+        task_def_arn = "arn:aws:ecs:us-west-1:160524802911:task-definition/first-run-task-definition"
+        cluster = "JenkinsCluster"
+        exec_role_arn = "arn:aws:iam::160524802911:role/Jenkins"
     }
     
     // Here you can define one or more stages for your pipeline.
     // Each stage can execute one or more steps.
     stages {
         // This is a stage.
-        stage('Example') {
+        stage('Build') {
             steps {
               // Get SHA1 of current commit
               script {
@@ -33,5 +33,15 @@ pipeline {
               sh "docker rmi -f ${docker_repo_uri}:${commit_id}"
             }
         }
+        stage('Deploy') {
+            steps {
+                // Override image field in taskdef file
+                sh "sed -i 's|{{image}}|${docker_repo_uri}:${commit_id}|' taskdef.json"
+                // Create a new task definition revision
+                sh "aws ecs register-task-definition --execution-role-arn ${exec_role_arn} --cli-input-json file://taskdef.json --region ${region}"
+                // Update service on Fargate
+                sh "aws ecs update-service --cluster ${cluster} --service sample-app-service --task-definition ${task_def_arn} --region ${region}"
+            }
+        }        
     }
 }
