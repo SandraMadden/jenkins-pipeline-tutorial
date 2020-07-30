@@ -4,6 +4,7 @@ COPY . /code
 WORKDIR /code
 
 # Run unit tests
+ENV CGO_ENABLED 0
 RUN go test
 
 # Build app
