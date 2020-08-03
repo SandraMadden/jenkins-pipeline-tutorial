@@ -45,12 +45,12 @@ If you have never forked a repository, [this][10] might help.
 The simplest way to get a container running on AWS is to use Fargate, so we will use a sample
 Fargate deployment which takes care of everything for us: VPC, SGs, IAM and the cluster itself.
 
-> **NOTE:** Fargate is only available on the **us-east-1** region at the time of writing, so we
+> **NOTE:** Fargate is only available on the **us-west-1** region at the time of writing, so we
 > will use this region.
 
 Perform the following steps to prepare the Fargate environment for our deployment:
 
-1. Log in to the ECS console under the **us-east-1** region (or simply click [here][4]).
+1. Log in to the ECS console under the **us-west-1** region (or simply click [here][4]).
 2. Click **Get Started**.
 3. Under **Container definition**, leave the **sample-app** option selected and click **Next**.
 4. Under **Load balancer type** choose **Application Load Balancer** and click **Next**.
@@ -234,8 +234,8 @@ you created previously. It shall be similar to the following:
         ...
 
         environment {
-            region = "us-east-1"
-            docker_repo_uri = "xxxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/sample-app"
+            region = "us-west-1"
+            docker_repo_uri = "xxxxxxxxxxxx.dkr.ecr.us-west-1.amazonaws.com/sample-app"
             task_def_arn = ""
             cluster = ""
             exec_role_arn = ""
@@ -313,9 +313,9 @@ automatically for you when you created the cluster.
 So, after these changes, your `environment` should look similar to the following:
 
     environment {
-        region = "us-east-1"
-        docker_repo_uri = "xxxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/sample-app"
-        task_def_arn = "arn:aws:ecs:us-east-1:xxxxxxxxxxxx:task-definition/first-run-task-definition"
+        region = "us-west-1"
+        docker_repo_uri = "xxxxxxxxxxxx.dkr.ecr.us-west-1.amazonaws.com/sample-app"
+        task_def_arn = "arn:aws:ecs:us-west-1:xxxxxxxxxxxx:task-definition/first-run-task-definition"
         cluster = "default"
         exec_role_arn = "arn:aws:iam::xxxxxxxxxxxx:role/ecsTaskExecutionRole"
     }
@@ -384,21 +384,21 @@ repository** and then **Delete**.
 [1]: https://jenkins.io/doc/book/pipeline/
 [2]: https://aws.amazon.com/fargate/
 [3]: https://aws.amazon.com/cli/
-[4]: https://console.aws.amazon.com/ecs/home?region=us-east-1
-[5]: https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LoadBalancers:sort=loadBalancerName
-[6]: https://console.aws.amazon.com/iam/home?region=us-east-1#/roles
-[7]: https://console.aws.amazon.com/ec2/v2/home?region=us-east-1
+[4]: https://console.aws.amazon.com/ecs/home?region=us-west-1
+[5]: https://console.aws.amazon.com/ec2/v2/home?region=us-west-1#LoadBalancers:sort=loadBalancerName
+[6]: https://console.aws.amazon.com/iam/home?region=us-west-1#/roles
+[7]: https://console.aws.amazon.com/ec2/v2/home?region=us-west-1
 [8]: https://git-scm.com/
 [9]: https://help.github.com/articles/which-remote-url-should-i-use/
 [10]: https://guides.github.com/activities/forking/
 [11]: http://groovy-lang.org/
 [12]: https://code.visualstudio.com/
 [13]: https://atom.io/
-[14]: https://console.aws.amazon.com/ecs/home?region=us-east-1#/repositories
+[14]: https://console.aws.amazon.com/ecs/home?region=us-west-1#/repositories
 [15]: https://jenkins.io/doc/book/pipeline/syntax/#agent
 [16]: https://jenkins.io/doc/pipeline/steps/
 [17]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html
-[18]: https://console.aws.amazon.com/ecs/home?region=us-east-1#/taskDefinitions
-[19]: https://console.aws.amazon.com/ecs/home?region=us-east-1#/clusters/default/services/sample-app-service/deployments
+[18]: https://console.aws.amazon.com/ecs/home?region=us-west-1#/taskDefinitions
+[19]: https://console.aws.amazon.com/ecs/home?region=us-west-1#/clusters/default/services/sample-app-service/deployments
 [20]: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#deregistration-delay
-[21]: https://console.aws.amazon.com/ecs/home?region=us-east-1#/clusters
+[21]: https://console.aws.amazon.com/ecs/home?region=us-west-1#/clusters

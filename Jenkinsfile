@@ -1,7 +1,7 @@
 // Declarative pipelines must be enclosed with a "pipeline" directive.
 pipeline {
     // This line is required for declarative pipelines. Just keep it here.
-    agent any
+    agent none
 
     // This section contains environment variables which are available for use in the
     // pipeline's stages.
@@ -16,6 +16,15 @@ pipeline {
     // Here you can define one or more stages for your pipeline.
     // Each stage can execute one or more steps.
     stages {
+        agent {
+            ecs {
+                inheritFrom 'ecs_agent_template1'
+                cpu 2048
+                memory 4096
+                image 'jenkins/inbound-agent'
+                portMappings([[containerPort: 22, hostPort: 22, protocol: 'tcp'], [containerPort: 443, hostPort: 443, protocol: 'tcp']])
+            }
+        }      
         // This is a stage.
         stage('Build') {
             steps {
